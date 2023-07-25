@@ -5,9 +5,9 @@ import shopCartContext from "../context/shopcartContext";
 export default function Shop({ selectedCard }) {
   //接收Context
   const { card18, setCard18 } = useContext(shopCartContext);
-  //传初始State11
+  //传初始 State11
   // const [dataLength, setDataLength] = useState(11);
-  //将刚刚定好的datalength放入selectedCard，选中的卡片
+  //将刚刚定好的datalength放入selectedCard,选中的卡片
   const [currentDisplayCard, setCurrentDisplayCard] = useState(selectedCard);
   // 每当卡片和datalength发生改变，setSelectedCard都会重新slice card18
   useEffect(() => {
