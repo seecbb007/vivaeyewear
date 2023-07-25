@@ -1,0 +1,141 @@
+.Productdetail {
+  width: 80vw;
+  margin: 100px auto;
+  margin-top: 200px;
+}
+
+.productmodles {
+  width: 1200px;
+  height: 560px;
+  border: 1px solid #e1e1e1;
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+}
+
+.productmodles .productmodle_img {
+  width: 150px;
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: hidden;
+  border-right: 1px solid #e1e1e1;
+}
+
+.productmodles .productmodle_img .modelsimg {
+  height: 120px;
+  border: 1px solid #e1e1e1;
+}
+
+.productmodles .showcase {
+  width: 450px;
+  height: 560px;
+  flex-grow: 1;
+  background: #f8f8f8;
+  border-left: 1px solid #e1e1e1;
+  margin-left: 5px;
+}
+
+.productmodles .showcase .showcaseimg {
+  width: 100%;
+  margin: 25% 0;
+}
+
+.productmodles .modelDetails {
+  margin-left: 30px;
+  width: 500px;
+  padding: 40px 20px;
+}
+
+.productmodles .modelDetails .modelDetails_toppart {
+  width: 450px;
+}
+
+.productmodles .modelDetails .modelDetails_toppart .md_subtitle {
+  color: #818181;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.productmodles .modelDetails .modelDetails_toppart .md_title {
+  margin: 5px 0;
+}
+
+.productmodles .modelDetails .modelDetails_toppart .md_explaination {
+  margin: 35px 0 20px 0;
+  color: #4a4a4a;
+  font-size: 1.2rem;
+  font-size: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.productmodles .modelDetails .modelDetails_middlepart {
+  margin: 40px 0 30px 0;
+  color: #818181;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.productmodles .modelDetails .modelDetails_middlepart .glassesSize .gs_selections {
+  margin-bottom: 15px;
+  margin-left: -8px;
+  width: 450px;
+}
+
+.productmodles .modelDetails .modelDetails_middlepart .glassesColor .gc_colors {
+  margin: 10px 0;
+}
+
+.productmodles .modelDetails .modleDetails_bottompart .glasses_pricing {
+  color: #1a1a1a;
+  margin: 20px 0;
+}
+
+.productmodles .modelDetails .modleDetails_bottompart .glasses_addtobask {
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  background-color: #101010;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  margin: 25px 0;
+}
+
+.productmodles .modelDetails .modleDetails_bottompart .glasses_addtobask:hover {
+  cursor: pointer;
+  background-color: rgba(16, 16, 16, 0.9);
+}
+
+.productmodles .modelDetails .modleDetails_bottompart .glasses_addtobask_remove {
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  background-color: white;
+  color: #101010;
+  text-align: center;
+  line-height: 50px;
+  margin: 25px 0;
+  padding: 0 10px;
+  border: 1px solid #e1e1e1;
+}
+
+.productmodles .modelDetails .modleDetails_bottompart .glasses_addtobask_remove:hover {
+  cursor: pointer;
+  background-color: rgba(225, 225, 225, 0.9);
+}
+
+.Backtoshop {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #101010;
+  margin-bottom: 30px;
+  padding-left: 20px;
+}
+
+.Backtoshop svg {
+  margin-right: 10px;
+}

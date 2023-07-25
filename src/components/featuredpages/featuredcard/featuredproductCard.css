@@ -1,0 +1,37 @@
+.fp_product {
+  width: 99%;
+  max-height: 30rem;
+  border: 1px solid #e1e1e1;
+}
+.fp_container_img {
+  width: 401px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(241, 241, 241, 0.6);
+}
+.fp_gimg {
+  width: 332px;
+  transition: all 0.3s linear;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+}
+.fpproduct_naming {
+  padding: 20px;
+}
+.fpproduct_name {
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Arial;
+}
+.fpproduct_nickname {
+  font-style: italic;
+  color: #818181;
+  font-size: 16px;
+  margin-top: 5px;
+}

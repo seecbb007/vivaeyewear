@@ -1,0 +1,43 @@
+.featuredProducts {
+  margin-top: 500px;
+  width: 80vw;
+  margin: 100px auto;
+}
+
+.featuredProducts .fp_titleContainer {
+  width: 80vw;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+}
+
+.featuredProducts .fp_titleContainer .fp_title {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #1a1a1a;
+  font-size: 30px;
+  font-weight: 700;
+}
+.fp_imgContainer {
+  width: 100%;
+  height: 100%;
+  flex-basis: 50%;
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 300px;
+}
+.bannerguy {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(5rem);
+}
+
+.productDisplay {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 15px;
+  row-gap: 10px;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 150px;
+}

@@ -1,0 +1,240 @@
+@mixin VerticalCHorizonC {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.authContent {
+  width: 100%;
+  margin: 190px 0 50px 0;
+}
+.incorrectWarning {
+  width: 670px;
+  margin: 0 auto;
+  border: 1px solid red;
+  color: red;
+  background-color: #fef2f2;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 15px;
+  font-size: 15px;
+}
+.incorrectWarning_hidden {
+  display: none;
+}
+.authContent_center {
+  width: 700px;
+  margin: 0 auto;
+  border: 1px solid #c5c5c5;
+
+  .authContent_title {
+    font-size: 18px;
+    padding: 5px 40px;
+    color: #1a1a1a;
+  }
+  .authContent_user {
+    margin-top: 10px;
+    padding: 0px 40px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .authMessage {
+    height: 80px;
+    border-top: 1px solid #c5c5c5;
+    background-color: #f2f2f2;
+    @include VerticalCHorizonC();
+    .checkquestion {
+      color: #4a4a4a;
+      font-size: 12px;
+      margin-right: 30px;
+      font-weight: 700;
+    }
+    .signin_butt {
+      background-color: #f2f2f2;
+      border: 1px solid #e1e1e1;
+      color: #4a4a4a;
+      padding: 15px;
+      font-weight: 700;
+      &:hover {
+        cursor: pointer;
+        background-color: #e1e1e1;
+      }
+    }
+  }
+}
+
+.authContent_info {
+  height: 320px;
+  .alluserinfo {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+
+    .eachfiledlabel {
+      font-size: 16px;
+      padding: 5px 0;
+      color: #696868;
+    }
+    .eachfiledlabelred {
+      font-size: 16px;
+      padding: 5px 0;
+
+      color: red;
+    }
+    .eachfiledinput {
+      height: 35px;
+      padding-left: 10px;
+      width: 300px;
+    }
+    .eachfiledinputred {
+      height: 35px;
+      padding-left: 10px;
+      width: 300px;
+      border: 1px solid red;
+      &:focus {
+        outline: none !important;
+        border: 1px solid red;
+      }
+    }
+  }
+  .flexbutton {
+    display: flex;
+    margin-top: 20px;
+    width: 300px;
+    justify-content: space-between;
+
+    // justify-content: flex-end;
+    .forgotPassw_butt {
+      font-size: 12px;
+      margin-top: 10px;
+      text-decoration: underline;
+      color: #4a4a4a;
+      font-weight: 550;
+      text-shadow: 0 5px 10px rgba(0, 0, 0, 0.02);
+    }
+    .signUp {
+      background: #101010;
+      padding: 1rem;
+      border: 1px solid #101010;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      flex-direction: flex-end;
+      // margin: 20px 0;
+      @include VerticalCHorizonC();
+      &:hover {
+        cursor: pointer;
+        background-color: #2a2a2a;
+      }
+      .svgarrowright {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+.authContent_line {
+  padding: 10px 20px;
+  width: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .or {
+    margin: 20px 0;
+    font-size: 13px;
+    color: #1a1a1a;
+  }
+  .line {
+    width: 1px;
+    height: 70px;
+    background-color: #e1e1e1;
+  }
+}
+.socialmedia {
+  margin-bottom: 50px;
+  .allsocialmediainfo {
+    margin-top: 10px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    #eachsocialmedia_css {
+      @include VerticalCHorizonC();
+      font-size: 15px;
+      font-weight: 600;
+      width: 210px;
+      height: 60px;
+      padding: 0 10px;
+    }
+    .media_fb {
+      background-color: #0078ff;
+      color: white;
+      &:hover {
+        background-color: #006ce6;
+        cursor: pointer;
+      }
+      svg {
+        margin-right: 10px;
+      }
+    }
+    .media_google {
+      background: #fff;
+      color: #3a3a3a;
+      border: 1px solid #c5c5c5;
+      &:hover {
+        background-color: #e1e1e1;
+        cursor: pointer;
+      }
+      svg {
+        margin-right: 10px;
+        margin-left: -15px;
+      }
+    }
+    .media_github {
+      background: #101010;
+      color: white;
+      border: 1px solid #c5c5c5;
+      &:hover {
+        background-color: #2f363c;
+        cursor: pointer;
+      }
+      svg {
+        margin-right: 10px;
+        margin-left: -15px;
+      }
+    }
+  }
+}
+.userMenu {
+  display: flex;
+  align-items: center;
+}
+.ifsigned_true {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .signupInfo_Name {
+    font-size: 16px;
+    max-width: 120px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .goldenAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    @include VerticalCHorizonC();
+    .goldenAvatar_img {
+      width: 80px;
+      height: 80px;
+    }
+    .arrowdown {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

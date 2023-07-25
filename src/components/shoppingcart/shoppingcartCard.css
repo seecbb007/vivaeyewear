@@ -1,0 +1,110 @@
+.BasketCard_Container {
+  width: 600px;
+  height: 100px;
+  border: 1px solid #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.BasketCard_Container .plusminusButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.BasketCard_Container .plusminusButtons .pm_buttn {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  color: #4a4a4a;
+  border: 1px solid #e1e1e1;
+  font-size: 1.5rem;
+}
+
+.BasketCard_Container .plusminusButtons .pm_buttn.plus:hover {
+  cursor: pointer;
+  background-color: #e1e1e1;
+}
+
+.BasketCard_Container .plusminusButtons .pm_buttn.minus:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.BasketCard_Container .BasketCardInformation {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.BasketCard_Container .BasketCardInformation .card_imgContainer {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.BasketCard_Container .BasketCardInformation .card_imgContainer .cardImg {
+  width: 90px;
+  height: 80px;
+}
+
+.BasketCard_Container .BasketCardInformation .card_allinfo {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  height: 60px;
+  padding: 20px 0;
+}
+
+.BasketCard_Container .BasketCardInformation .card_allinfo .allinfo_title {
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+.BasketCard_Container .BasketCardInformation .card_allinfo .allinfo_detailInformation {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.BasketCard_Container .BasketCardInformation .card_allinfo .allinfo_detailInformation .detailList {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.BasketCard_Container .BasketCardInformation .card_allinfo .allinfo_detailInformation .detailList .detailList_text {
+  color: #8d8d8d;
+  margin-bottom: 3px;
+}
+
+.BasketCard_Container .cardPricing {
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: 550;
+  color: #1a1a1a;
+}
+
+.BasketCard_Container .deleteButton {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e1e1e1;
+  font-size: 18px;
+  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.BasketCard_Container .deleteButton:hover {
+  cursor: pointer;
+  background-color: #e1e1e1;
+}

@@ -1,0 +1,81 @@
+.heroTitle_featured {
+  margin-left: 20px;
+}
+
+.heroContainer {
+  margin-left: 50px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-width: 1450px;
+  width: 90vw;
+  max-width: 2000px;
+  height: 450px;
+  background-color: #f3f3f3;
+  margin: 0 auto;
+  margin-top: 200px;
+}
+
+.heroImg {
+  width: 100%;
+  height: 100%;
+  flex-basis: 50%;
+  overflow: hidden;
+  min-width: 300px;
+  min-height: 300px;
+}
+
+.heroImg .bannergril {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translateX(5rem);
+}
+
+.heroContent {
+  height: 300px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-direction: column;
+  margin: auto 0;
+  padding: 30px;
+  min-width: 450px;
+}
+
+.heroContent .heroTitle {
+  font-size: 40px;
+}
+
+.heroContent .heroTitle .heroTitle_bold {
+  font-size: 45px;
+  font-weight: 700;
+}
+
+.heroContent .subtTitle {
+  font-size: 16px;
+  font-weight: 530;
+}
+
+.heroContent .shopNow {
+  background-color: #101010;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border: none;
+}
+
+.heroContent .shopNow:hover {
+  cursor: pointer;
+  background-color: rgba(16, 16, 16, 0.8);
+}
+
+.heroContent .shopNow span {
+  margin-right: 5px;
+  font-family: Tajawal, Helvetica, Arial, sans-serif;
+  font-weight: 650;
+}

@@ -1,0 +1,158 @@
+.viewAccount {
+  width: 100vw;
+  margin-top: 200px;
+}
+
+.viewAccount .viewAccountContainer {
+  border: 1px solid #e1e1e1;
+  background: #fff;
+  width: 1000px;
+  height: 720px;
+  margin: 0 auto;
+}
+
+.viewAccount .viewAccountContainer .view_top {
+  background: #f2f2f2;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.viewAccount .viewAccountContainer .view_top .view_Tabbar {
+  width: 400px;
+  height: 60px;
+  padding: 0 3.2rem;
+  display: flex;
+}
+
+.viewAccount .viewAccountContainer .view_top .view_Tabbar .view_userTab {
+  font-weight: 700;
+  color: #818181;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  line-height: 30px;
+  transition: all 0.3s ease;
+  padding: 15px;
+}
+
+.viewAccount .viewAccountContainer .view_top .view_Tabbar .view_userTab:hover {
+  cursor: pointer;
+}
+
+.tabContent {
+  padding: 20px;
+}
+
+.view_middle {
+  height: 200px;
+  position: relative;
+}
+
+.view_middle .userBanner {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.view_middle .user_avatar {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  background: #e1e1e1;
+}
+
+.view_middle .user_avatar .User_avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.view_middle .edit_butt {
+  background-color: #101010;
+  border: 1px solid #101010;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 30px;
+  right: 20px;
+}
+
+.view_middle .edit_butt:hover {
+  cursor: pointer;
+}
+
+.view_bottom {
+  margin-top: 30px;
+}
+
+.view_bottom .accountElementShowUp {
+  font-family: sans-serif;
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+.view_bottom .accountElementShowUp .details_answer {
+  margin: 20px 0;
+}
+
+.view_bottom .accountElementShowUp .details_answer.userName {
+  text-transform: capitalize;
+  margin: 25px 0;
+}
+
+.view_bottom .accountElementShowUp .details_title {
+  font-size: 15px;
+  margin: 15px 0;
+  color: #4a4a4a;
+  font-weight: 700;
+}
+
+.view_bottom .wishListShowUp,
+.view_bottom .ordersShowUp {
+  width: 100%;
+  height: 350px;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+  color: #1a1a1a;
+}
+
+.view_bottom .wishListShowUp .tabsText,
+.view_bottom .ordersShowUp .tabsText {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.view_bottom .wishListShowUp .tabsContent,
+.view_bottom .ordersShowUp .tabsContent {
+  font-size: 14px;
+  color: #818181;
+  font-weight: 600;
+}
+
+.view_bottom .elementHidden {
+  background-color: #4a4a4a;
+  display: none;
+}
+
+.view_userTab_active {
+  border-bottom: none;
+  background: #fff;
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 700;
+  padding: 15px;
+}

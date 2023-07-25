@@ -1,0 +1,104 @@
+.filterbutt {
+  height: 40px;
+  width: 80px;
+  margin-right: 20px;
+}
+
+.popper {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popperBox_Center {
+  padding: 25px;
+}
+
+.popperBox_Center .popperDropdown {
+  display: flex;
+}
+
+.popperBox_Center .popperDropdown .branddropdown .brand {
+  color: #4a4a4a;
+  font-size: 15px;
+  font-weight: 550;
+  padding-left: 8px;
+}
+
+.popperBox_Center .popperDropdown .branddropdown Dropdown {
+  width: 200px;
+}
+
+.popperBox_Center .popperDropdown .branddropdown .sort {
+  color: #4a4a4a;
+  font-size: 15px;
+  font-weight: 550;
+  padding-left: 8px;
+}
+
+.popperBox_Center .popperbutts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+.popperBox_Center .popperbutts .applyfil {
+  border: none;
+  width: 265px;
+  height: 60px;
+  background-color: #101010;
+  color: #fff;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+}
+
+.popperBox_Center .popperbutts .applyfil:hover {
+  cursor: pointer;
+}
+
+.popperBox_Center .popperbutts .resetfil {
+  border: none;
+  width: 265px;
+  height: 60px;
+  color: #fff;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid #101010;
+  color: #101010;
+}
+
+.popperBox_Center .popperbutts .resetfil:hover {
+  cursor: pointer;
+}
+
+.css-d3wcwz-MuiTypography-root {
+  color: #4a4a4a;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  padding-left: 8px !important;
+  margin-bottom: 10px !important;
+}
+
+.priceRangeDisplay {
+  width: 520px;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.priceRangeDisplay .priceRangeDisplay_center {
+  width: 400px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 10px auto;
+}
