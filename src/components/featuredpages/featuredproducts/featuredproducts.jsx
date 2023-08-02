@@ -15,7 +15,7 @@ export default function FeaturedProducts({ productTitle, productsInfo }) {
         {productsInfo.map((eachinfo, index) => {
           return (
             <FeaturedProductCard
-              key={index}
+              key={eachinfo.id}
               img={eachinfo.img}
               title={eachinfo.title}
               subtitle={eachinfo.subtitle}

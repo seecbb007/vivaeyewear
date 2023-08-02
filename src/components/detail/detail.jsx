@@ -14,7 +14,8 @@ import shopCartContext from "../../context/shopcartContext";
 
 export default function Productdetail({ productsInfo }) {
   // state 里面存了shopcard18，
-  const { card18, setCard18 } = useContext(shopCartContext);
+  const { card18, shoppingCartList, setShoppingCartList } =
+    useContext(shopCartContext);
   // get selected Color
   const [selectedColor, setSelectedColor] = useState("");
   //get selected frame size
@@ -27,6 +28,7 @@ export default function Productdetail({ productsInfo }) {
   const RecommendedProduct = productsInfo.filter((eachitem) => {
     return eachitem.recommended === true;
   });
+
   //params传参，取id值
   const params = useParams();
   let paramsId = params.id;
@@ -38,38 +40,33 @@ export default function Productdetail({ productsInfo }) {
     }
   })[0];
 
-  // add to shopping cart
   const handleAddtoCart = () => {
-    const newList = card18.map((eachcard) => {
-      if (eachcard.id === currentParamsId_Card.id) {
-        return {
-          ...eachcard,
-          quantity: eachcard.quantity + 1,
-          addedInCart: true,
-          selectedColor: selectedColor,
-          selectedFrameSize: selectedFrameSize,
-        };
-      }
-      return eachcard;
-    });
-    setCard18(newList);
+    setShoppingCartList([
+      ...shoppingCartList,
+      {
+        ...currentParamsId_Card,
+        quantity: currentParamsId_Card.quantity + 1,
+        addedInCart: true,
+        selectedColor: selectedColor,
+        selectedFrameSize: selectedFrameSize,
+      },
+    ]);
   };
 
   //Remove item from shopping cart
   const handlerRemovefromCart = () => {
-    const newList = card18.map((eachcard) => {
-      if (eachcard.id === currentParamsId_Card.id) {
-        return {
-          ...eachcard,
-          quantity: 0,
-          addedInCart: false,
-        };
-      }
-      return eachcard;
+    const newList = shoppingCartList.filter((eachItem) => {
+      return eachItem.id !== currentParamsId_Card.id;
     });
-    setCard18(newList);
+    setShoppingCartList(newList);
   };
   // console.log("detail setSelectedFrameSize", setSelectedFrameSize);
+
+  const ifItemInCart =
+    shoppingCartList.filter((eachItem) => {
+      return eachItem.id === currentParamsId_Card.id;
+    }).length === 1;
+
   return (
     <div className="Productdetail">
       <Link to="/shop" style={{ textDecoration: "none" }}>
@@ -157,7 +154,7 @@ export default function Productdetail({ productsInfo }) {
               ${currentParamsId_Card.price}.00
             </div>
 
-            {currentParamsId_Card.addedInCart ? (
+            {ifItemInCart ? (
               <div
                 className="glasses_addtobask_remove"
                 onClick={() => handlerRemovefromCart()}

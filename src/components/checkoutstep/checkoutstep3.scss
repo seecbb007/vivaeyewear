@@ -1,0 +1,50 @@
+.checkout_Container {
+  margin: 200px 0 80px 100px;
+}
+.shippinginfo {
+  padding: 1rem 1.2rem;
+  color: #696868;
+  font-size: 16px;
+  font-weight: 700;
+}
+.step1_title {
+  margin: 1.5rem 0;
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 700;
+}
+.paymentoption_butt {
+  color: #4a4a4a;
+  font-size: 15px;
+  margin-top: 50px;
+  font-weight: 700;
+}
+.shipping_currentsubtotal {
+  height: 50px;
+  width: 100%;
+
+  .shipping_internationalcost_title {
+    color: #4a4a4a;
+    font-size: 15px;
+    margin-right: 55px;
+  }
+  .shipping_internationalcost_cost {
+    color: #818181;
+    font-size: 15px;
+  }
+}
+.paymentinformation {
+  height: 80px;
+  width: 100%;
+
+  text-align: right;
+  .payment_title {
+    color: #4a4a4a;
+    font-size: 15px;
+  }
+  .payment_cost {
+    color: #818181;
+    font-size: 20px;
+  }
+}

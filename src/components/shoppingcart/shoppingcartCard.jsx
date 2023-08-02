@@ -18,20 +18,22 @@ export default function ShoppingcartCard({ eachItem }) {
     selectedFrameSize,
     selectedColor,
   } = eachItem;
-  // console.log("cart", quantity);
 
-  const currentColor = selectedColor === "" ? colors[0] : selectedColor;
+  const currentColor =
+    selectedColor === undefined || selectedColor === ""
+      ? colors[0]
+      : selectedColor;
   const currentFrameSize =
-    selectedFrameSize === "" ? framesize[0] : selectedFrameSize;
-  console.log("eachItem", eachItem.framesize);
+    selectedFrameSize === undefined || selectedFrameSize === ""
+      ? framesize[0]
+      : selectedFrameSize;
+
   let totalPricing = quantity * price;
-  const { card18, setCard18 } = useContext(shopCartContext);
-  const itemInCart = card18.filter((eachcard) => {
-    return eachcard.addedInCart === true;
-  });
+  const { shoppingCartList, setShoppingCartList } = useContext(shopCartContext);
+
   // shopping cart CARD___ADD Quantity
   const handleAddQuantity = () => {
-    const newList = card18.map((eachcard) => {
+    const newList = shoppingCartList.map((eachcard) => {
       if (eachcard.id === id) {
         return {
           ...eachcard,
@@ -40,11 +42,11 @@ export default function ShoppingcartCard({ eachItem }) {
       }
       return eachcard;
     });
-    setCard18(newList);
+    setShoppingCartList(newList);
   };
 
   const handleRemoveQuantity = () => {
-    const newList = card18.map((eachcard) => {
+    const newList = shoppingCartList.map((eachcard) => {
       if (eachcard.id === id && quantity > 1) {
         return {
           ...eachcard,
@@ -53,45 +55,38 @@ export default function ShoppingcartCard({ eachItem }) {
       }
       return eachcard;
     });
-    setCard18(newList);
+    setShoppingCartList(newList);
   };
 
   // shopping cart CARD___DELETE
   const handleDelete = () => {
-    let newList = card18.map((eachcard) => {
-      if (eachcard.id === id) {
-        return {
-          ...eachcard,
-          quantity: 0,
-          addedInCart: false,
-        };
-      }
-      return eachcard;
+    let newList = shoppingCartList.filter((eachItem) => {
+      return eachItem.id !== id;
     });
-    setCard18(newList);
+    setShoppingCartList(newList);
   };
 
   return (
     <div>
       <div className="BasketCard">
         <div className="BasketCard_Container">
-          <div className="plusminusButtons">
-            <button
-              id={id}
-              className="pm_buttn plus"
-              onClick={(e) => handleAddQuantity(e)}
-            >
-              +
-            </button>
-            <button
-              id={id}
-              className="pm_buttn minus"
-              onClick={(e) => handleRemoveQuantity(e)}
-            >
-              -
-            </button>
-          </div>
           <div className="BasketCardInformation">
+            <div className="plusminusButtons">
+              <button
+                id={id}
+                className="pm_buttn plus"
+                onClick={(e) => handleAddQuantity(e)}
+              >
+                +
+              </button>
+              <button
+                id={id}
+                className="pm_buttn minus"
+                onClick={(e) => handleRemoveQuantity(e)}
+              >
+                -
+              </button>
+            </div>
             <div className="card_imgContainer">
               <img src={img} alt="BasketCard_img" className="cardImg" />
             </div>
@@ -159,14 +154,14 @@ export default function ShoppingcartCard({ eachItem }) {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="cardPricing">${totalPricing}.00</div>
-          <div
-            className="deleteButton"
-            id={id}
-            onClick={(e) => handleDelete(e)}
-          >
-            X
+            <div className="cardPricing">${totalPricing}.00</div>
+            <div
+              className="deleteButton"
+              id={id}
+              onClick={(e) => handleDelete(e)}
+            >
+              X
+            </div>
           </div>
         </div>
       </div>

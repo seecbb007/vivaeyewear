@@ -11,7 +11,7 @@ import shopCartContext from "../../context/shopcartContext";
 import Dropdown from "../shoppages/dropdownlist/dropdown";
 import Viewaccount from "../viewaccount/viewaccount";
 
-export default function Navbar({ shopCard18, updateFilter }) {
+export default function Navbar({ shopCard18 }) {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [navBarHeight, setNavBarHeight] = useState(150);
   const location = useLocation();
@@ -26,11 +26,14 @@ export default function Navbar({ shopCard18, updateFilter }) {
     useContext(signContext);
 
   // add to shopping cart context
-  const { card18, setCard18 } = useContext(shopCartContext);
-  let itemInCart_length = card18.filter((eachcard) => {
-    // console.log("eacj", eachcard.addedInCart);
-    return eachcard.quantity > 0;
-  })?.length;
+  const {
+    shoppingCartList,
+    setShoppingCartList,
+    productDisplayList,
+    setProductDispalyList,
+    card18,
+  } = useContext(shopCartContext);
+  let itemInCart_length = shoppingCartList?.length;
   // const providerValue = useCallback(() => {
   //   return cartStatus, setCartStatus;
   // }, [cartStatus, setCartStatus]);
@@ -63,7 +66,10 @@ export default function Navbar({ shopCard18, updateFilter }) {
   const handleShoppingCartClick = () => {
     setCartStatus(true);
   };
-
+  // shop page button clcik and refresh shop page
+  const handleShopPageClick = () => {
+    setProductDispalyList(card18);
+  };
   return (
     <div>
       <MainContext.Provider value={{ cartStatus, setCartStatus }}>
@@ -85,7 +91,11 @@ export default function Navbar({ shopCard18, updateFilter }) {
             <NavLink to="/" className="navButt">
               Home
             </NavLink>
-            <NavLink to="/shop" className="navButt">
+            <NavLink
+              to="/shop"
+              className="navButt"
+              onClick={() => handleShopPageClick()}
+            >
               Shop
             </NavLink>
             {/* <NavLink
@@ -108,10 +118,7 @@ export default function Navbar({ shopCard18, updateFilter }) {
             <div className="filterbutt">
               {/*首先在App.js里面已经传给Navbar这些数据，再接着传入命名为Filterpopper 函数组件（filter.jsx），传shopCard18卡片数据，传 updateFilter函数 */}
               {location.pathname === "/shop" ? (
-                <Filterpopper
-                  shopCard18={shopCard18}
-                  updateFilter={updateFilter}
-                />
+                <Filterpopper shopCard18={shopCard18} />
               ) : (
                 ""
               )}
