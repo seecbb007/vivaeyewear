@@ -1,40 +1,41 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../search/search.css";
 import ShopProductList from "../shoppages/shopProductList/shopProductList";
 import shopCartContext from "../../context/shopcartContext";
 
 export default function Search({ productsInfo }) {
-  const { card18, setCard18 } = useContext(shopCartContext);
+  const { productDisplayList, setProductDispalyList, setShowMoreItem } =
+    useContext(shopCartContext);
 
   const params = useParams();
   let searchid = params.searchid;
   let matchsearch = `^${searchid}`;
   let reg = new RegExp(matchsearch, "i");
 
-  const compareCardTitle = productsInfo.filter((eachcard) => {
+  const compareCardTitleResult = productsInfo.filter((eachcard) => {
     if (reg.test(eachcard.title.replace(/\s/g, "")) === true) {
       return eachcard;
     }
   });
-  const [currentDisplayCard, setCurrentDisplayCard] =
-    useState(compareCardTitle);
-
+  console.log("compareCardTitleResult", compareCardTitleResult);
+  // const [currentDisplayCard, setCurrentDisplayCard] = useState(
+  //   compareCardTitleResult
+  // );
+  useEffect(() => {
+    setProductDispalyList(compareCardTitleResult);
+    setShowMoreItem(true);
+  }, [searchid]);
   return (
     <div className="searchTitle">
-      {compareCardTitle?.length > 0 ? (
+      {compareCardTitleResult?.length > 0 ? (
         <>
           <div className="searchinfo">
-            Found {compareCardTitle?.length} product with keyword {searchid}
+            Found {compareCardTitleResult?.length} product with keyword{" "}
+            {searchid}
           </div>
 
-          <ShopProductList
-            selectedCard={compareCardTitle}
-            setCard18={setCard18}
-            card18={card18}
-            currentDisplayCard={currentDisplayCard}
-            setCurrentDisplayCard={setCurrentDisplayCard}
-          />
+          <ShopProductList />
         </>
       ) : (
         <div className="noproductfound">No product found.</div>

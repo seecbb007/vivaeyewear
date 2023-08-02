@@ -4,30 +4,19 @@ import shopCartContext from "../context/shopcartContext";
 
 export default function Shop({ selectedCard }) {
   //接收Context
-  const { card18, setCard18 } = useContext(shopCartContext);
-  //传初始 State11
-  // const [dataLength, setDataLength] = useState(11);
-  //将刚刚定好的datalength放入selectedCard,选中的卡片
-  const [currentDisplayCard, setCurrentDisplayCard] = useState(selectedCard);
-  // 每当卡片和datalength发生改变，setSelectedCard都会重新slice card18
+  const { card18, filterdData, productDisplayList, setProductDispalyList } =
+    useContext(shopCartContext);
+  //用来判断Shop页面， Filterdata有没有内容，如果为长度大于0，就显示FilterData内容，
+  //如下USEEFFECT，用来更新展示filter过的数据
   useEffect(() => {
-    if (selectedCard?.length > 12) {
-      setCurrentDisplayCard(selectedCard.slice(0, 11));
+    if (filterdData.length > 0) {
+      setProductDispalyList(filterdData);
     }
-  }, []);
+  }, [filterdData]);
 
   return (
-    <div>
-      <ShopProductsList
-        selectedCard={selectedCard}
-        // setDataLength={setDataLength}
-        setCard18={setCard18}
-        card18={card18}
-        currentDisplayCard={currentDisplayCard}
-        setCurrentDisplayCard={setCurrentDisplayCard}
-      />
-
-      {/* <div>filter tags</div> */}
+    <div style={{ height: "100vh" }}>
+      <ShopProductsList />
     </div>
   );
 }

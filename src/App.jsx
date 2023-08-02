@@ -10,6 +10,8 @@ import signContext from "./context/signContext";
 import shopCartContext from "./context/shopcartContext";
 import allContext from "./context";
 import Account from "./pages/account";
+import Checkout from "./pages/checkout";
+import Confirmation from "./components/checkoutstep/confirmation/confirmation";
 //imges
 import img_biscut from "../src/assest/biscut.jpg";
 import img_blue from "../src/assest/blue.jpg";
@@ -22,6 +24,9 @@ import ShopProductsList from "./components/shoppages/shopProductList/shopProduct
 import FeaturedProducts from "./components/featuredpages/featuredproducts/featuredproducts";
 import Productdetail from "./components/detail/detail";
 import img_green from "../src/assest/green.jpg";
+import CheckoutStep1 from "./components/checkoutstep/checkoutstep1";
+import CheckoutStep2 from "./components/checkoutstep/checkoutstep2";
+import CheckoutStep3 from "./components/checkoutstep/checkoutstep3";
 
 //Routes
 import Home from "./pages/home";
@@ -39,7 +44,7 @@ function App() {
       img: img_blue,
       title: "Sugat",
       subtitle: "Betsin Maalat",
-      price: 56,
+      price: 68,
       addedInCart: false,
       quantity: 0,
       colors: ["primary", "neutral"],
@@ -89,7 +94,7 @@ function App() {
       cardtype: "shopcard",
       img: img_red,
       title: "Quake Overload",
-      subtitle: "Yezyow",
+      subtitle: "Salt Maalat",
       price: 80,
       recommended: true,
       colors: ["danger", "info", "success", "warning"],
@@ -177,7 +182,7 @@ function App() {
       cardtype: "shopcard",
       img: img_red,
       title: "Sipon Malapot",
-      subtitle: "Salt",
+      subtitle: "Salt Maalat",
       price: 250,
       featured: true,
       colors: ["info", "danger", "success"],
@@ -274,28 +279,42 @@ function App() {
   // 定义useState, 确定user有没有登录，有就return true，没有拿到token就是False。
   const [ifsigned, setIfsigned] = useState(signed ? true : false);
   //设置useState状态，selectedCard变量名，setselectedCard函数，初始值里嵌套了数组方法slice0-11个卡片，也就是会出现12个卡片
-  const [selectedCard, setSelectedCard] = useState(card18);
-  //定义函数updateFilter，调用setselectedCard(data)，待会要接收在Navbar,filterpopper传回来的数据，用data接收
 
-  const updateFilter = (data) => {
-    setSelectedCard(data);
-  };
-  console.log("filterd data", selectedCard);
-
-  //定义useState, 是一个空数组，这代表有没有眼镜卡片加进购物车，加进去了就会实在这个数组里面。
-  const [itemInCart, setItemInCart] = useState([]);
-
+  //定义函数filterdData, 并设置进context
+  const [filterdData, setFilterdData] = useState([]);
+  //showMoreItem 按钮
+  const [showMoreItem, setShowMoreItem] = useState(true);
+  //shoppingCartList 购物车State
+  const [shoppingCartList, setShoppingCartList] = useState([]);
+  // shop页面显示State
+  const [productDisplayList, setProductDispalyList] = useState(card18);
+  const [shippingCost, setShippingCost] = useState(0);
   //Auth function to check login status for Shop page。If the user did not sign in, it will redirect to sign in page.Otherwise, it can access Shop page
   function Auth({ children }) {
     let islogin = ifsigned;
     // let islogin = localStorage.getItem("token");
     return islogin ? children : <Navigate to="/signin"></Navigate>;
   }
-  // console.log("signupInfo", signupInfo);
+  // useEffect(() => {
+  //   localStorage.setItem("showMoreItem", false);
+  // }, [showMoreItem]);
   return (
     <BrowserRouter>
       <shopCartContext.Provider
-        value={{ itemInCart, setItemInCart, card18, setCard18 }}
+        value={{
+          card18,
+          setCard18,
+          filterdData,
+          setFilterdData,
+          shoppingCartList,
+          setShoppingCartList,
+          showMoreItem,
+          setShowMoreItem,
+          productDisplayList,
+          setProductDispalyList,
+          shippingCost,
+          setShippingCost,
+        }}
       >
         <signContext.Provider
           value={{ signupInfo, setSignupInfo, ifsigned, setIfsigned }}
@@ -303,14 +322,7 @@ function App() {
           <div className="App">
             <Routes>
               <Route path="/" element={<Home productsInfo={card18} />}></Route>
-              <Route
-                path="/shop"
-                element={
-                  <Auth>
-                    <Shop selectedCard={selectedCard} />
-                  </Auth>
-                }
-              ></Route>
+              <Route path="/shop" element={<Shop />}></Route>
               <Route
                 path="/featured"
                 element={<Featured productsInfo={card18} />}
@@ -335,9 +347,22 @@ function App() {
                 element={<Search productsInfo={card18} />}
               ></Route>
               <Route path="/account" element={<Account />}></Route>
+              <Route
+                path="/checkout"
+                element={
+                  <Auth>
+                    <Checkout />
+                  </Auth>
+                }
+              >
+                <Route path="step1" element={<CheckoutStep1 />}></Route>
+                <Route path="step2" element={<CheckoutStep2 />}></Route>
+                <Route path="step3" element={<CheckoutStep3 />}></Route>
+                <Route path="confirmation" element={<Confirmation />}></Route>
+              </Route>
             </Routes>
             {/* 函数传参Shopcard18个卡片，传参：updateFilter函数，这样navbar里面就能使用这些数据和函数 */}
-            <NavBar shopCard18={card18} updateFilter={updateFilter} />
+            <NavBar shopCard18={card18} />
           </div>
         </signContext.Provider>
       </shopCartContext.Provider>

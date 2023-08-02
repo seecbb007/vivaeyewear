@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Popper from "@mui/material/Popper";
 import "../filters/filter.css";
 import Dropdown from "../shoppages/dropdownlist/dropdown";
 import Rangefilter from "./rangefilter/rangefilter";
+
+import shopCartContext from "../../context/shopcartContext";
 // 接收传由navBar传过来的shopCard18, updateFilter数据
-export default function SimplePopper({ shopCard18, updateFilter }) {
+export default function SimplePopper({ shopCard18 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   // 设置State,参数selectedFilterValue，函数setSelectedFilterValue，无初始值。专门用于选择符合要求Brand和Sortby里面的数据
   const [selectedFilterValue, setSelectedFilterValue] = useState({
@@ -14,6 +16,15 @@ export default function SimplePopper({ shopCard18, updateFilter }) {
     priceMin: 67,
     priceMax: 674,
   });
+
+  const {
+    filterdData,
+    setFilterdData,
+    setShowMoreItem,
+    card18,
+    productDisplayList,
+    setProductDispalyList,
+  } = useContext(shopCartContext);
   // console.log("selectedFilterValue", selectedFilterValue);
   // 设置State,参数selectedFilterPrice，函数setSelectedFilterPrice，无初始值。专门用于选择符合要求Price里面的数据
   // const [selectedFilterPrice, setSelectedFilterPrice] = useState();
@@ -82,13 +93,21 @@ export default function SimplePopper({ shopCard18, updateFilter }) {
       return a.price - b.price;
     });
   }
-  //设置handleApplyFilter函数，当点击FilterApply时就会关闭POOPER，同时调用updateFilter函数里的三个参数，value是brand，price，pricemax,sort by
+  //设置handleApplyFilter函数，当点击FilterApply时就会关闭POOPER，同时调用setFilterdData函数里的三个参数，value是brand，price，pricemax,sort by
+
+  const handleSetFilterdData = () => {
+    setFilterdData(filteredshopCard18_value);
+    setShowMoreItem(true);
+  };
+
   const handleApplyFilter = function handleApplyFilter(event) {
     // 传选择好的brand
     setAnchorEl(anchorEl ? null : event.currentTarget);
-    updateFilter(filteredshopCard18_value);
+    filteredshopCard18_value.length > 0
+      ? handleSetFilterdData()
+      : setFilterdData("notFound");
   };
-  console.log("filter18", filteredshopCard18_value);
+
   const handleResetFilter = function handleResetFilter(event) {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     setSelectedFilterValue({
@@ -97,7 +116,9 @@ export default function SimplePopper({ shopCard18, updateFilter }) {
       priceMin: 67,
       priceMax: 674,
     });
-    // updateFilter(shopCard18);
+    // setFilterdData(card18);
+    setFilterdData([]);
+    setProductDispalyList(card18);
   };
   return (
     <div>

@@ -92,6 +92,7 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
 
   const { signupInfo, setSignupInfo, ifsigned, setIfsigned } =
     useContext(signContext);
+
   const [currentUserinfo, setCurrentUserinfo] = useState({
     fullname: "",
     email: "",
@@ -469,7 +470,10 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
               <div className="allsocialmediainfo">
                 {socialmedia.map((eachsocialmedia, index) => {
                   return (
-                    <div className="userinformation" key={index}>
+                    <div
+                      className="userinformation"
+                      key={eachsocialmedia.cName}
+                    >
                       <div
                         className={eachsocialmedia.cName}
                         id="eachsocialmedia_css"

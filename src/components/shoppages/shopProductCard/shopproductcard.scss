@@ -7,46 +7,40 @@
   position: relative;
   text-decoration: none;
   position: relative;
-}
+  &:hover {
+    position: relative;
+    cursor: pointer;
+    .container_img {
+      width: 100%;
+      height: 100px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(241, 241, 241, 0.6);
+    }
+    .gimg {
+      margin-top: 20px;
+      transform: scale(0.6);
+    }
 
-.smallProduct:hover {
-  position: relative;
-  cursor: pointer;
+    .smallProduct_info {
+      position: absolute;
+      transform: translateY(-20px);
+    }
+    .addBasket_butt {
+      margin-top: -20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
 }
-
-.smallProduct:hover .container_img {
-  width: 100%;
-  height: 100px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(241, 241, 241, 0.6);
-}
-
-.smallProduct:hover .gimg {
-  margin-top: 20px;
-  transform: scale(0.6);
-}
-
-.smallProduct:hover .smallProduct_info {
-  position: absolute;
-  transform: translateY(-20px);
-}
-
-.smallProduct:hover .addBasket_butt {
-  margin-top: -20px;
-}
-
-.smallProduct:hover .addBasket_butt:hover {
-  cursor: pointer;
-}
-
 .smallProduct_info {
   transition: 0.5s;
+
   height: 250px;
 }
-
 .container_img {
   width: 100%;
   height: 110px;
@@ -56,17 +50,15 @@
   align-items: center;
   background-color: rgba(241, 241, 241, 0.6);
 }
-
 .gimg {
   width: 100%;
 }
-
 .product_naming {
   padding: 20px;
+
   height: 100px;
   text-align: center;
 }
-
 .product_name {
   margin-bottom: 10px;
   color: #1a1a1a;
@@ -74,21 +66,18 @@
   font-weight: 700;
   font-family: Arial;
 }
-
 .product_nickname {
   font-style: italic;
   color: #818181;
   font-size: 14px;
   margin: 15px 0;
 }
-
 .smallproduct_price {
   margin: 25px 0;
   font-size: 17px;
   font-weight: 700;
   color: #000;
 }
-
 .addBasket_butt {
   height: 50px;
   background-color: #000;
@@ -107,14 +96,12 @@
 .addBasket_butt.buttonremove:hover {
   background-color: #e1e1e1;
 }
-
 .checkmark {
   position: absolute;
   top: 10px;
   right: 5px;
   z-index: 2;
 }
-
 .checkmarkhidden {
   display: none;
 }

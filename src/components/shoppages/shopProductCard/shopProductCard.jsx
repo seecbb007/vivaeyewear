@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../shopProductCard/shopproductcard.css";
+import "./shopproductcard.css";
 import shopCartContext from "../../../context/shopcartContext";
 
 export default function ShopProductCard({
@@ -11,112 +11,143 @@ export default function ShopProductCard({
   id,
   addedInCart,
   quantity,
-  setCard18,
-  card18,
+  colors,
+  framesize,
 }) {
   //shopcart context data
-  // const { card18, setCard18 } = useContext(shopCartContext);
+  const { shoppingCartList, setShoppingCartList } = useContext(shopCartContext);
 
   // get selected Color=
   const [selectedColor, setSelectedColor] = useState("neutral");
   //get selected frame size
   const [selectedFrameSize, setSelectedFrameSize] = useState("36 mm");
 
-  // const [checkCartStatus, setCheckCartStatus] = useState(addedInCart);
-  // Add product to cart
-
   const handleAddToBasket = () => {
-    const newList = card18.map((eachcard) => {
-      // console.log("In SHOP", "Each card.id", eachcard.id);
-      // console.log("In SHOP", "id", id);
-      if (eachcard.id === id) {
-        console.log("-----------------------------");
-        return {
-          ...eachcard,
-          quantity: eachcard.quantity + 1,
-          addedInCart: true,
-          selectedColor: "neutral",
-          selectedFrameSize: "28 mm",
-        };
-      }
-      return eachcard;
-    });
-    setCard18(newList);
+    setShoppingCartList([
+      ...shoppingCartList,
+      {
+        img,
+        title,
+        subtitle,
+        price,
+        id,
+        addedInCart,
+        colors,
+        framesize,
+        quantity: quantity + 1,
+      },
+    ]);
   };
 
-  // Remove product from cart
   const handleRemovefromBasket = () => {
-    const newList = card18.map((eachcard) => {
-      if (eachcard.id === id) {
-        return {
-          ...eachcard,
-          quantity: 0,
-          addedInCart: false,
-        };
-      }
-      return eachcard;
+    const newList = shoppingCartList.filter((eachProduct) => {
+      return eachProduct.id !== id;
     });
-    setCard18(newList);
-    // setCheckCartStatus(false);
-    // let newfilterlist = itemInCart.filter((eachitem) => {
-    //   // Return 返回与点中，id不一样的卡片
-    //   return Number(eachitem.id) !== Number(id);
-    // });
+    setShoppingCartList(newList);
   };
 
-  // itemInCart.filter((eachProduct) => {
-  //   return eachProduct.id === id;
-  // }) === 0;
-  // To check if glassess added to the basket
-  // const checkBasketStatus =
-  //   itemInCart.filter((eachitem) => {
-  //     if (eachitem.id === id) {
-  //       return eachitem;
-  //     }
-  //   })?.length === 0;
+  const ifItemInCart =
+    shoppingCartList.filter((eachItem) => {
+      return eachItem.id === id;
+    }).length === 1;
 
-  //Remove item from shopping cart
-  // const handlerRemovefromCart = (id) => {
-  //   let removedCurrentlist = itemInCart.filter((eachitem) => {
-  //     if (eachitem.id !== id) {
-  //       return eachitem;
-  //     }
-  //   });
-  //   // setItemInCart(removedCurrentlist);
-  // };
   return (
-    <div className="smallProduct">
-      <div className="smallProduct_info">
-        <Link to={`/productdetail/${id}`} style={{ textDecoration: "none" }}>
-          <div className="container_img">
-            <img src={img} alt="eyeglasses" className="gimg" />
-          </div>
-          <div className="product_naming">
-            <div className="product_name">{title}</div>
-            <div className="product_nickname">{subtitle}</div>
-            <div className="smallproduct_price">${price}.00</div>
-          </div>
-        </Link>
-        {quantity > 0 ? (
-          <div
-            className="addBasket_butt buttonremove"
-            onClick={() => {
-              handleRemovefromBasket();
-            }}
+    <>
+      {ifItemInCart ? (
+        <div
+          className="smallProduct"
+          style={{ border: "1px solid rgb(166, 165, 165)" }}
+        >
+          <svg
+            className="checkmark"
+            t="1690866180131"
+            viewBox="0 0 1027 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2259"
+            width="15"
+            height="15"
           >
-            Remove From basket
+            <path
+              d="M380.64 755.386L950.847 185.18c17.573-17.573 46.066-17.573 63.64 0 17.573 17.574 17.573 46.066 0 63.64l-582.59 582.59c-28.308 28.308-74.205 28.308-102.512 0L9.18 511.205c-17.573-17.573-17.573-46.066 0-63.64 17.574-17.573 46.066-17.573 63.64 0l307.82 307.821z"
+              p-id="2260"
+              fill="#3B9620"
+            ></path>
+          </svg>
+
+          <div className="smallProduct_info">
+            <Link
+              to={`/productdetail/${id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="container_img">
+                <img src={img} alt="eyeglasses" className="gimg" />
+              </div>
+              <div className="product_naming">
+                <div className="product_name">{title}</div>
+                <div className="product_nickname">{subtitle}</div>
+                <div className="smallproduct_price">${price}.00</div>
+              </div>
+            </Link>
+            {ifItemInCart ? (
+              <div
+                className="addBasket_butt buttonremove"
+                onClick={() => {
+                  handleRemovefromBasket();
+                }}
+              >
+                Remove From basket
+              </div>
+            ) : (
+              <div
+                className="addBasket_butt"
+                onClick={() => {
+                  handleAddToBasket();
+                }}
+              >
+                Add to basket
+              </div>
+            )}
           </div>
-        ) : (
-          <div
-            className="addBasket_butt"
-            onClick={() => {
-              handleAddToBasket();
-            }}
-          >
-            Add to basket
+        </div>
+      ) : (
+        <div className="smallProduct">
+          <div className="smallProduct_info">
+            <Link
+              to={`/productdetail/${id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="container_img">
+                <img src={img} alt="eyeglasses" className="gimg" />
+              </div>
+              <div className="product_naming">
+                <div className="product_name">{title}</div>
+                <div className="product_nickname">{subtitle}</div>
+                <div className="smallproduct_price">${price}.00</div>
+              </div>
+            </Link>
+            {ifItemInCart ? (
+              <div
+                className="addBasket_butt buttonremove"
+                onClick={() => {
+                  handleRemovefromBasket();
+                }}
+              >
+                Remove From basket
+              </div>
+            ) : (
+              <div
+                className="addBasket_butt"
+                onClick={() => {
+                  handleAddToBasket();
+                }}
+              >
+                Add to basket
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }

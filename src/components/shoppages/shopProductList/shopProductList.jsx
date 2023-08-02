@@ -2,61 +2,93 @@ import React, { useContext, useEffect, useState } from "react";
 import "./shopProductList.css";
 import ShopProductCard from "../shopProductCard/shopProductCard";
 import { Link, Params, useLocation } from "react-router-dom";
+import shopCartContext from "../../../context/shopcartContext";
 
-export default function ShopProductList({
-  selectedCard,
-  setDataLength,
-  setCard18,
-  card18,
-  currentDisplayCard,
-  setCurrentDisplayCard,
-}) {
+export default function ShopProductList() {
+  // const showMoreItemStatus = localStorage.getItem("showMoreItem");
+  const {
+    showMoreItem,
+    setShowMoreItem,
+    productDisplayList,
+    filterdData,
+    card18,
+    setProductDispalyList,
+  } = useContext(shopCartContext);
   const [buttonclassName, setButtonClassName] = useState("showmoreitems");
   const location = useLocation();
+  // 用这个state来接时常变换的SHOWMOREITEM button
+  // const [currentDisplayCard, setCurrentDisplayCard] = useState(
+  //   showMoreItem === true ? productDisplayList.slice(0, 11) : productDisplayList
+  // );
+  const [currentDisplayCard, setCurrentDisplayCard] = useState([]);
 
-  // location.pathname(() => {});
+  useEffect(() => {
+    setCurrentDisplayCard(
+      productDisplayList.length > 11 && showMoreItem === true
+        ? productDisplayList.slice(0, 11)
+        : productDisplayList
+    );
+  }, [productDisplayList]);
+  console.log("currentDisplayCard", currentDisplayCard);
+  console.log("currentList type", typeof currentDisplayCard);
+  console.log("productDisplayList", productDisplayList);
+  console.log("filtered", filterdData);
   return (
     <div className="shopProductListContainer">
-      <div className="shopProductList">
-        <div className="shopproductDisplay">
-          {currentDisplayCard?.map((eachinfo) => {
-            return (
-              <ShopProductCard
-                img={eachinfo.img}
-                title={eachinfo.title}
-                subtitle={eachinfo.subtitle}
-                price={eachinfo.price}
-                id={eachinfo.id}
-                key={eachinfo.id}
-                addedInCart={eachinfo.addedInCart}
-                quantity={eachinfo.quantity}
-                setCard18={setCard18}
-                card18={card18}
-                colors={eachinfo.colors}
-              />
-            );
-          })}
-        </div>
-        {/* 如果selectedCard的长度是11，就出现黑色按钮。大于11就不出现，显示null */}
-        {/* {console.log(
-          "selectedCard?.length ",
-          selectedCard?.length,
-          "currentDisplayCard?.length ",
-          currentDisplayCard?.length
-        )} */}
-        {selectedCard?.length > currentDisplayCard?.length &&
-        location.pathname === "/shop" ? (
-          <div
-            className={buttonclassName}
-            onClick={() => {
-              setCurrentDisplayCard(selectedCard);
-            }}
-          >
-            Show More Items
+      <div className="cover">
+        <div className="shopProductList">
+          {filterdData.length > 0 &&
+          location.pathname === "/shop" &&
+          filterdData !== "notFound" ? (
+            <h5 style={{ textAlign: "center", color: "#1a1a1a" }}>
+              Found {filterdData.length} products
+            </h5>
+          ) : (
+            <div></div>
+          )}
+
+          <div className="shopproductDisplay">
+            {currentDisplayCard === "notFound" ? (
+              <div className="resetFilter_butt">No Result Found</div>
+            ) : (
+              typeof currentDisplayCard &&
+              currentDisplayCard?.map((eachinfo) => {
+                return (
+                  <ShopProductCard
+                    img={eachinfo.img}
+                    title={eachinfo.title}
+                    subtitle={eachinfo.subtitle}
+                    price={eachinfo.price}
+                    id={eachinfo.id}
+                    key={eachinfo.id}
+                    addedInCart={eachinfo.addedInCart}
+                    quantity={eachinfo.quantity}
+                    colors={eachinfo.colors}
+                    framesize={eachinfo.framesize}
+                  />
+                );
+              })
+            )}
           </div>
-        ) : (
-          ""
-        )}
+          {/* 如果selectedCard的长度是11，就出现黑色按钮。大于11就不出现，显示null */}
+
+          {showMoreItem === true &&
+          productDisplayList.length > 11 &&
+          location.pathname === "/shop" ? (
+            <div
+              className={buttonclassName}
+              onClick={() => {
+                setCurrentDisplayCard(productDisplayList);
+                setShowMoreItem(false);
+                // localStorage.setItem("showMoreItem", false);
+              }}
+            >
+              Show More Items
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

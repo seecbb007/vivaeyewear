@@ -103,3 +103,36 @@
   background-color: #2a2a2a;
   cursor: pointer;
 }
+
+.pooperwindow {
+  width: 400px;
+  height: 250px;
+  background-color: white;
+  color: #4a4a4a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pooperwindow .pooperwindow_title {
+  text-align: center;
+}
+
+.pooperwindow .buttongroup {
+  width: 320px;
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pooperwindow .buttongroup .popper_butts {
+  padding: 10px;
+  font-weight: 650;
+  border: 1px solid #e1e1e1;
+  color: #4a4a4a;
+}
+
+.pooperwindow .buttongroup .popper_butts:hover {
+  cursor: pointer;
+}
