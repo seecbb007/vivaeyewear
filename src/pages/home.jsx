@@ -2,23 +2,15 @@ import React, { useState } from "react";
 import Hero from "../components/hero/hero";
 import Products from "../components/products/products";
 import Footer from "../components/footer/footer";
-// all images
-import img_biscut from "../assest/biscut.jpg";
-import img_blue from "../assest/blue.jpg";
-import img_brown from "../assest/brown.jpg";
-import img_golden from "../assest/golden.jpg";
-import img_red from "../assest/red.jpg";
-import img_sbrown from "../assest/sbrown.jpg";
-import img_green from "../assest/green.jpg";
 
 export default function Home({ productsInfo }) {
   //FeaturedProduct 页面上的数据
-  const FeaturedProduct = productsInfo.filter((eachitem) => {
+  const FeaturedProduct = productsInfo?.filter((eachitem) => {
     return eachitem.featured === true;
   });
 
   //RecommendedProduct 页面上的数据
-  const RecommendedProduct = productsInfo.filter((eachitem) => {
+  const RecommendedProduct = productsInfo?.filter((eachitem) => {
     return eachitem.recommended === true;
   });
   return (

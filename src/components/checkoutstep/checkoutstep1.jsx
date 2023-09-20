@@ -10,17 +10,21 @@ import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import ShoppingcartCard from "../shoppingcart/shoppingcartCard";
-
+import { useSelector } from "react-redux/es/hooks/useSelector";
 const steps = ["Order Summary", "Shopping Detials", "Payment"];
 
 export default function CheckoutStep1() {
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  console.log("dahsodh", shoppingCartData);
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const { shoppingCartList, setShoppingCartList } = useContext(shopCartContext);
-  const itemInCart = shoppingCartList;
+  const itemInCart = shoppingCartData;
 
   //get total price
-  const subtotalPriceList = itemInCart.map((eachitem) => {
+  const subtotalPriceList = itemInCart?.map((eachitem) => {
     return eachitem.price * eachitem.quantity;
   });
   const initial_subtotalPrice = 0;
@@ -31,11 +35,11 @@ export default function CheckoutStep1() {
 
   let location = useLocation();
   const totalSteps = () => {
-    return steps.length;
+    return steps?.length;
   };
 
   const completedSteps = () => {
-    return Object.keys(completed).length;
+    return Object.keys(completed)?.length;
   };
 
   const isLastStep = () => {
@@ -94,7 +98,7 @@ export default function CheckoutStep1() {
         >
           {/* checkout 栏目 */}
           <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((label, index) => (
+            {steps?.map((label, index) => (
               <Step key={label} completed={completed[index]}>
                 <StepButton
                   // onClick={handleStep(index)}
@@ -109,7 +113,7 @@ export default function CheckoutStep1() {
             <div className="step1_title">Order Summary</div>
             <div className="step1_subtitle">Review items in your basket.</div>
             <div className="display_shoppingcartlist">
-              {itemInCart.map((eachItem, index) => {
+              {itemInCart?.map((eachItem, index) => {
                 return (
                   <ShoppingcartCard eachItem={eachItem} key={eachItem.id} />
                 );

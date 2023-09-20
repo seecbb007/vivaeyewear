@@ -2,13 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./shopproductcard.css";
 import shopCartContext from "../../../context/shopcartContext";
+import { addItemToShoppingCart } from "../../../apiService";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import renderGlassImg from "../../../utils/renderGlassImg";
+import { setCurrentShoppingCartList } from "../../../actions/shoppingCartAction";
 
 export default function ShopProductCard({
   img,
   title,
   subtitle,
   price,
-  id,
+  itemNumber,
   addedInCart,
   quantity,
   colors,
@@ -21,42 +26,97 @@ export default function ShopProductCard({
   const [selectedColor, setSelectedColor] = useState("neutral");
   //get selected frame size
   const [selectedFrameSize, setSelectedFrameSize] = useState("36 mm");
+  const dispatch = useDispatch();
 
   const handleAddToBasket = () => {
-    setShoppingCartList([
-      ...shoppingCartList,
-      {
-        img,
-        title,
-        subtitle,
-        price,
-        id,
-        addedInCart,
-        colors,
-        framesize,
-        quantity: quantity + 1,
-      },
-    ]);
+    // setShoppingCartList([
+    //   ...shoppingCartList,
+    //   {
+    //     img,
+    //     title,
+    //     subtitle,
+    //     price,
+    //     itemNumber,
+    //     addedInCart,
+    //     colors,
+    //     framesize,
+    //     quantity: quantity + 1,
+    //   },
+    // ]);
+    const item = {
+      img,
+      title,
+      subtitle,
+      price,
+      itemNumber,
+      addedInCart,
+      colors,
+      framesize,
+      quantity: quantity + 1,
+    };
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shop", item)
+      .then((res) => {
+        // console.log("iii", item);
+        // console.log("add to shopping cart api response", res.data.data);
+
+        // setShoppingCartList(res.data);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            // console.log("Get shoppingCartList data", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            // console.log("get shop item fail", error);
+          });
+      })
+      .catch((error) => {
+        // console.log("addItem Failed", error);
+      });
   };
 
   const handleRemovefromBasket = () => {
-    const newList = shoppingCartList.filter((eachProduct) => {
-      return eachProduct.id !== id;
-    });
-    setShoppingCartList(newList);
+    // const newList = shoppingCartList.filter((eachProduct) => {
+    //   return eachProduct.itemNumber !== itemNumber;
+    // });
+    // setShoppingCartList(newList);
+    let itemNumbernum = { itemNumber };
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shopproductCardDelete", itemNumbernum)
+      .then((res) => {
+        console.log("shopProductCardDelete", res.data);
+        console.log("remove item", itemNumber);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            console.log("Get shoppingCartList data", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            // console.log("get shop item fail", error);
+          });
+      })
+      .catch((error) => {
+        // console.log("Fail to remove item", error);
+      });
   };
 
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  // console.log("shopProductCard", shoppingCartData);
   const ifItemInCart =
-    shoppingCartList.filter((eachItem) => {
-      return eachItem.id === id;
-    }).length === 1;
-
+    shoppingCartData.filter((eachItem) => {
+      return eachItem.itemNumber === itemNumber;
+    })?.length === 1;
+  // console.log("ifItemInCart", ifItemInCart);
   return (
     <>
       {ifItemInCart ? (
         <div
           className="smallProduct"
-          style={{ border: "1px solid rgb(166, 165, 165)" }}
+          style={{ border: "1px solitemNumber rgb(166, 165, 165)" }}
         >
           <svg
             className="checkmark"
@@ -64,24 +124,28 @@ export default function ShopProductCard({
             viewBox="0 0 1027 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
-            p-id="2259"
-            width="15"
+            p-itemNumber="2259"
+            witemNumberth="15"
             height="15"
           >
             <path
               d="M380.64 755.386L950.847 185.18c17.573-17.573 46.066-17.573 63.64 0 17.573 17.574 17.573 46.066 0 63.64l-582.59 582.59c-28.308 28.308-74.205 28.308-102.512 0L9.18 511.205c-17.573-17.573-17.573-46.066 0-63.64 17.574-17.573 46.066-17.573 63.64 0l307.82 307.821z"
-              p-id="2260"
+              p-itemNumber="2260"
               fill="#3B9620"
             ></path>
           </svg>
 
           <div className="smallProduct_info">
             <Link
-              to={`/productdetail/${id}`}
+              to={`/productdetail/${itemNumber}`}
               style={{ textDecoration: "none" }}
             >
               <div className="container_img">
-                <img src={img} alt="eyeglasses" className="gimg" />
+                <img
+                  src={renderGlassImg(img)}
+                  alt="Eyeglasses"
+                  className="gimg"
+                />
               </div>
               <div className="product_naming">
                 <div className="product_name">{title}</div>
@@ -114,11 +178,15 @@ export default function ShopProductCard({
         <div className="smallProduct">
           <div className="smallProduct_info">
             <Link
-              to={`/productdetail/${id}`}
+              to={`/productdetail/${itemNumber}`}
               style={{ textDecoration: "none" }}
             >
               <div className="container_img">
-                <img src={img} alt="eyeglasses" className="gimg" />
+                <img
+                  src={renderGlassImg(img)}
+                  alt="shopeyeglasses"
+                  className="gimg"
+                />
               </div>
               <div className="product_naming">
                 <div className="product_name">{title}</div>

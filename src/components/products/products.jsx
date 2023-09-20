@@ -4,6 +4,8 @@ import "./products.css";
 import ProductCard from "../productCard/productCard";
 import { Link } from "react-router-dom";
 
+import renderGlassImg from "../../utils/renderGlassImg";
+
 export default function Products({
   productTitle,
   productsInfo,
@@ -28,18 +30,19 @@ export default function Products({
           )}
         </div>
         <div className="p_productDisplay">
-          {productsInfo.map((eachinfo) => {
+          {productsInfo?.map((eachinfo) => {
             return (
               <Link
-                to={`/productdetail/${eachinfo.id}`}
+                to={`/productdetail/${eachinfo.itemNumber}`}
                 style={{ textDecoration: "none" }}
-                key={eachinfo.id}
+                key={eachinfo.itemNumber}
               >
                 <ProductCard
                   img={eachinfo.img}
                   title={eachinfo.title}
                   subtitle={eachinfo.subtitle}
                 />
+                {/* {renderGlassImg(eachinfo)} */}
               </Link>
             );
           })}

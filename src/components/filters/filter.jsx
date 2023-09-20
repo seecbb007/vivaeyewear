@@ -42,7 +42,7 @@ export default function SimplePopper({ shopCard18 }) {
   const id = open ? "simple-popper" : undefined;
 
   const filteredshopCard18_value = shopCard18
-    .filter((eachfilteredcard) => {
+    ?.filter((eachfilteredcard) => {
       if (
         selectedFilterValue.brand === "All Brands" ||
         selectedFilterValue.brand === ""
@@ -103,7 +103,7 @@ export default function SimplePopper({ shopCard18 }) {
   const handleApplyFilter = function handleApplyFilter(event) {
     // 传选择好的brand
     setAnchorEl(anchorEl ? null : event.currentTarget);
-    filteredshopCard18_value.length > 0
+    filteredshopCard18_value?.length > 0
       ? handleSetFilterdData()
       : setFilterdData("notFound");
   };

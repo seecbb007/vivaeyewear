@@ -19,7 +19,7 @@ export default function ExampleProductAttributes({
         sx={{ gap: 2, flexDirection: "row" }}
       >
         {/* ["primary", "neutral", "danger", "info", "success", "warning"] */}
-        {currentColorlist.map((color) => (
+        {currentColorlist?.map((color) => (
           <Sheet
             key={color}
             sx={{

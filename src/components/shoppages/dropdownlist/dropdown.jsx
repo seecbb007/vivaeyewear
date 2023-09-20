@@ -112,7 +112,7 @@ export default function MultipleSelectPlaceholder({
           {/* <MenuItem disabled value="">
             <em>{inputLable}</em>
           </MenuItem> */}
-          {names.map((name) => (
+          {names?.map((name) => (
             <MenuItem
               key={name}
               value={name}

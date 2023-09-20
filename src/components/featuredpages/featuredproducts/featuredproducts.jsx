@@ -12,10 +12,10 @@ export default function FeaturedProducts({ productTitle, productsInfo }) {
         </div>
       </div>
       <div className="productDisplay">
-        {productsInfo.map((eachinfo, index) => {
+        {productsInfo?.map((eachinfo, index) => {
           return (
             <FeaturedProductCard
-              key={eachinfo.id}
+              key={eachinfo.itemNumber}
               img={eachinfo.img}
               title={eachinfo.title}
               subtitle={eachinfo.subtitle}

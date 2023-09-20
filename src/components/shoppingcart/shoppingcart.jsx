@@ -5,12 +5,27 @@ import shopCartContext from "../../context/shopcartContext";
 import ShoppingcartCard from "./shoppingcartCard";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import signContext from "../../context/signContext";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginData, setUserInfoData } from "../../actions/loginActions";
+import { setCurrentShoppingCartList } from "../../actions/shoppingCartAction";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 export default function Shoppingcart({ handleShoppingCartClick }) {
+  //get data from redux reducer
+  const dispatch = useDispatch();
+  // const ifLogedin = useSelector((state) => {
+  //   // console.log("shoppingcart", state?.loginReducer);
+  //   return state?.loginReducer?.ifLogedin;
+  // });
+  const ifLogedin = localStorage.getItem("token");
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  // console.log("111shoppingCartData", shoppingCartData);
+
   const [totalprice, setTotalPrice] = useState([]);
   const ref = useRef(null);
   const { cartStatus, setCartStatus } = useContext(MainContext);
@@ -19,7 +34,7 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
     useContext(signContext);
 
   const navigate = useNavigate();
-  const itemInCart = shoppingCartList;
+  const itemInCart = shoppingCartData;
 
   const cartClassName =
     cartStatus === true ? "shoppingCart" : "hidden shoppingCart";
@@ -47,7 +62,7 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
 
   // Calculate subtotal price
 
-  const subtotalPriceList = itemInCart.map((eachitem) => {
+  const subtotalPriceList = itemInCart?.map((eachitem) => {
     return eachitem.price * eachitem.quantity;
   });
 
@@ -58,11 +73,33 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
   );
   // Clear Basket Button
   const handleClearBasket = () => {
-    setShoppingCartList([]);
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shopproductCardDeleteAll")
+      .then((res) => {
+        console.log("Empty shopping cart", res.data);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            console.log("Empty whole list", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            console.log("faile to empty", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Failed to empty shopping cart", error);
+      });
+    // setShoppingCartList([]);
   };
   // check out Button
   const handleCheckOut = () => {
-    if (subtotalPrice > 0 && ifsigned === true) {
+    if (
+      subtotalPrice > 0 &&
+      ifLogedin?.length > 0
+
+      // === true
+    ) {
       navigate(`/checkout/step1`);
       setCartStatus(false);
     }
@@ -76,6 +113,11 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
     setOpen(true);
   };
 
+  //get redux data
+
+  // const iflogedin = useSelector((state) => {
+  //   return state?.ifLogedin;
+  // });
   return (
     <div>
       <div className={cartClassName} ref={ref}>
@@ -103,7 +145,7 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
             </div>
           </div>
           <div className="sc_middle">
-            {itemInCart.map((eachItem, index) => {
+            {itemInCart?.map((eachItem, index) => {
               return <ShoppingcartCard eachItem={eachItem} key={eachItem.id} />;
             })}
           </div>
@@ -116,7 +158,8 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
               </div>
             </div>
             <div></div>
-            {ifsigned === true ? (
+            {ifLogedin?.length > 0 ? (
+              // === true
               <div
                 className="sc_bottom_checkout"
                 onClick={() => handleCheckOut()}
@@ -129,7 +172,6 @@ export default function Shoppingcart({ handleShoppingCartClick }) {
                 onClick={() => handleCheckOut()}
               >
                 <Button onClick={handleOpen} sx={{ color: "#fff" }}>
-                  {" "}
                   CHECK OUT
                 </Button>
                 <Backdrop

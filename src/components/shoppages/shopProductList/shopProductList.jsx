@@ -3,7 +3,7 @@ import "./shopProductList.css";
 import ShopProductCard from "../shopProductCard/shopProductCard";
 import { Link, Params, useLocation } from "react-router-dom";
 import shopCartContext from "../../../context/shopcartContext";
-
+import { useSelector } from "react-redux/es/hooks/useSelector";
 export default function ShopProductList() {
   // const showMoreItemStatus = localStorage.getItem("showMoreItem");
   const {
@@ -24,24 +24,21 @@ export default function ShopProductList() {
 
   useEffect(() => {
     setCurrentDisplayCard(
-      productDisplayList.length > 11 && showMoreItem === true
+      productDisplayList?.length > 11 && showMoreItem === true
         ? productDisplayList.slice(0, 11)
         : productDisplayList
     );
   }, [productDisplayList]);
-  console.log("currentDisplayCard", currentDisplayCard);
-  console.log("currentList type", typeof currentDisplayCard);
-  console.log("productDisplayList", productDisplayList);
-  console.log("filtered", filterdData);
+
   return (
     <div className="shopProductListContainer">
       <div className="cover">
         <div className="shopProductList">
-          {filterdData.length > 0 &&
+          {filterdData?.length > 0 &&
           location.pathname === "/shop" &&
           filterdData !== "notFound" ? (
             <h5 style={{ textAlign: "center", color: "#1a1a1a" }}>
-              Found {filterdData.length} products
+              Found {filterdData?.length} products
             </h5>
           ) : (
             <div></div>
@@ -59,8 +56,8 @@ export default function ShopProductList() {
                     title={eachinfo.title}
                     subtitle={eachinfo.subtitle}
                     price={eachinfo.price}
-                    id={eachinfo.id}
-                    key={eachinfo.id}
+                    itemNumber={eachinfo.itemNumber}
+                    key={eachinfo.itemNumber}
                     addedInCart={eachinfo.addedInCart}
                     quantity={eachinfo.quantity}
                     colors={eachinfo.colors}
@@ -73,7 +70,7 @@ export default function ShopProductList() {
           {/* 如果selectedCard的长度是11，就出现黑色按钮。大于11就不出现，显示null */}
 
           {showMoreItem === true &&
-          productDisplayList.length > 11 &&
+          productDisplayList?.length > 11 &&
           location.pathname === "/shop" ? (
             <div
               className={buttonclassName}

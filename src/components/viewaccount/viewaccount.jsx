@@ -37,7 +37,7 @@ export default function Viewaccount() {
         ordersClassName: "ordersShowUp",
       });
     }
-    let newTabList = usertabs.map((eachTab) => {
+    let newTabList = usertabs?.map((eachTab) => {
       if (eachTab.id === e.target.id) {
         return {
           ...eachTab,
@@ -58,7 +58,7 @@ export default function Viewaccount() {
         <div className="viewAccountContainer">
           <div className="view_top">
             <div className="view_Tabbar">
-              {usertabs.map((eachtab) => {
+              {usertabs?.map((eachtab) => {
                 return (
                   <div
                     key={eachtab.id}
@@ -97,7 +97,7 @@ export default function Viewaccount() {
                 </div>
                 <div className="details_title">Email</div>
                 <h5 className="details_answer">
-                  {JSON.parse(localStorage.getItem("token")).email}
+                  {JSON.parse(localStorage.getItem("email"))}
                 </h5>
                 <div className="details_title">Address</div>
                 <h5

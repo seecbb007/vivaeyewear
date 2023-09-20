@@ -10,6 +10,9 @@ import goldenAvatar from "../../assest/goldenavatar.jpg";
 import shopCartContext from "../../context/shopcartContext";
 import Dropdown from "../shoppages/dropdownlist/dropdown";
 import Viewaccount from "../viewaccount/viewaccount";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginData, setUserInfoData } from "../../actions/loginActions";
+import axios from "axios";
 
 export default function Navbar({ shopCard18 }) {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -33,10 +36,50 @@ export default function Navbar({ shopCard18 }) {
     setProductDispalyList,
     card18,
   } = useContext(shopCartContext);
-  let itemInCart_length = shoppingCartList?.length;
+
   // const providerValue = useCallback(() => {
   //   return cartStatus, setCartStatus;
   // }, [cartStatus, setCartStatus]);
+
+  //get data from redux reducer
+  const dispatch = useDispatch();
+  // useEffect(()=>{
+  //   axios
+  //     .post("http://127.0.0.1:8080/api/v1/signin", loginUser)
+  //     .then((res) => {
+  //       console.log("fanhui shnme dongxi aaaa ", res.data);
+  //       navigate("/");
+  //       dispatch(setUserInfoData(res.data?.data));
+  //       dispatch(setLoginData(true));
+  //       localStorage.setItem("token", JSON.stringify(res.data.token));
+  //     })
+  //     .catch((error) => {
+  //       // console.log("Account created, could not logined in", error);
+  //     });
+
+  // },[])
+
+  const ifLogedin = useSelector((state) => {
+    return state?.loginReducer?.ifLogedin;
+  });
+  const logInStatus = localStorage.getItem("token");
+  // console.log("loged", loged);
+  const UserInfoData = useSelector((state) => {
+    return state?.loginReducer?.userInfo;
+  });
+  const shoppingCartListData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  let itemInCart_length = shoppingCartListData?.length;
+  // console.log("NAVBAR userinfodata", UserInfoData);
+  // console.log("NAVBAR IFLOGED", ifLogedin);
+  const handleSignout = () => {
+    // dispatch(setLoginData(false));
+    dispatch(setUserInfoData(""));
+    localStorage.removeItem("token", "");
+    localStorage.removeItem("fullname", "");
+    localStorage.removeItem("email", "");
+  };
 
   function onScroll() {
     setScrollPosition(document.documentElement.scrollTop);
@@ -70,6 +113,8 @@ export default function Navbar({ shopCard18 }) {
   const handleShopPageClick = () => {
     setProductDispalyList(card18);
   };
+
+  // console.log(JSON.parse(localStorage.getItem("fullname")));
   return (
     <div>
       <MainContext.Provider value={{ cartStatus, setCartStatus }}>
@@ -80,14 +125,6 @@ export default function Navbar({ shopCard18 }) {
             </div>
           </Link>
           <div className="navMenu">
-            {/* <NavLink
-              to="/"
-              className={(isActive) => {
-                return isActive ? "good" : "";
-              }}
-            >
-              Home
-            </NavLink> */}
             <NavLink to="/" className="navButt">
               Home
             </NavLink>
@@ -193,7 +230,8 @@ export default function Navbar({ shopCard18 }) {
                 <div className="addNumber"> {itemInCart_length}</div>
               )}
             </div>
-            {ifsigned === true ? (
+            {logInStatus?.length > 0 ? (
+              // === true
               <div className="ifSignedContainer">
                 <div
                   className="ifsigned_true"
@@ -201,10 +239,11 @@ export default function Navbar({ shopCard18 }) {
                     setuserDropdownClassname(!userDropdownClassname)
                   }
                 >
-                  {/* <div className="signupInfo_Name">{signupInfo.fullname}</div> */}
                   <div className="signupInfo_Name">
-                    {JSON.parse(localStorage.getItem("token")).fullname}
+                    {/* {UserInfoData?.fullname} */}
+                    {JSON.parse(localStorage.getItem("fullname"))}
                   </div>
+                  <div className="signupInfo_Name"></div>
                   <div className="goldenAvatar">
                     <img
                       src={goldenAvatar}
@@ -265,10 +304,7 @@ export default function Navbar({ shopCard18 }) {
                       </svg>
                     </Link>
                   </div>
-                  <div
-                    className="user_signout"
-                    onClick={() => setIfsigned(false)}
-                  >
+                  <div className="user_signout" onClick={() => handleSignout()}>
                     <Link
                       to="/signin"
                       style={{

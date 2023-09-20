@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import shopCartContext from "../../context/shopcartContext";
 import "./checkoutstep2.css";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoginData, setUserInfoData } from "../../actions/loginActions";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -20,6 +22,15 @@ const steps = ["Order Summary", "Shopping Detials", "Payment"];
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function CheckoutStep2() {
+  //get data from redux reducer
+  const dispatch = useDispatch();
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  const userInfoData = useSelector((state) => {
+    return state?.loginReducer?.userInfo;
+  });
+
   const [activeStep, setActiveStep] = React.useState(1);
   const [completed, setCompleted] = React.useState({});
 
@@ -29,9 +40,9 @@ export default function CheckoutStep2() {
     shippingCost,
     setShippingCost,
   } = useContext(shopCartContext);
-  const itemInCart = shoppingCartList;
+  const itemInCart = shoppingCartData;
   //get total price
-  const subtotalPriceList = itemInCart.map((eachitem) => {
+  const subtotalPriceList = itemInCart?.map((eachitem) => {
     return eachitem.price * eachitem.quantity;
   });
   const initial_subtotalPrice = 0;
@@ -42,10 +53,10 @@ export default function CheckoutStep2() {
   let location = useLocation();
 
   const totalSteps = () => {
-    return steps.length;
+    return steps?.length;
   };
   const completedSteps = () => {
-    return Object.keys(completed).length;
+    return Object.keys(completed)?.length;
   };
   const isLastStep = () => {
     return activeStep === totalSteps() - 1;
@@ -96,7 +107,7 @@ export default function CheckoutStep2() {
         >
           {/* checkout 栏目 */}
           <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((label, index) => (
+            {steps?.map((label, index) => (
               <Step key={label} completed={completed[index]}>
                 <StepButton
                   // onClick={handleStep(index)}
@@ -130,7 +141,8 @@ export default function CheckoutStep2() {
                     <TextField
                       id="outlined-size-small"
                       defaultValue={
-                        JSON.parse(localStorage.getItem("token")).fullname
+                        // userInfoData?.fullname
+                        JSON.parse(localStorage.getItem("fullname"))
                       }
                       size="medium"
                       sx={{
@@ -152,7 +164,8 @@ export default function CheckoutStep2() {
                     <TextField
                       id="outlined-size-small"
                       defaultValue={
-                        JSON.parse(localStorage.getItem("token")).email
+                        JSON.parse(localStorage.getItem("email"))
+                        // userInfoData?.email
                       }
                       size="medium"
                       sx={{

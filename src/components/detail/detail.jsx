@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import img_brown from "../../assest/brown.jpg";
+import axios from "axios";
 import "../detail/detail.css";
+import { useDispatch } from "react-redux";
+import { setCurrentShoppingCartList } from "../../actions/shoppingCartAction";
 // import { Theme, useTheme } from "@mui/material/styles";
 // import OutlinedInput from "@mui/material/OutlinedInput";
 // import MenuItem from "@mui/material/MenuItem";
@@ -11,8 +13,12 @@ import ColorList from "../shoppages/dropdownlist/colorlist";
 import Products from "../products/products";
 import { useParams, Link } from "react-router-dom";
 import shopCartContext from "../../context/shopcartContext";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+
+import renderGlassImg from "../../utils/renderGlassImg";
 
 export default function Productdetail({ productsInfo }) {
+  const dispatch = useDispatch();
   // state 里面存了shopcard18，
   const { card18, shoppingCartList, setShoppingCartList } =
     useContext(shopCartContext);
@@ -23,49 +29,102 @@ export default function Productdetail({ productsInfo }) {
   //If the id has changed, it will jump to the top of the page.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [useParams().id]);
+  }, [useParams()?.itemNumber]);
   //如果在filter数据中，filter到recommended是true的就返回这个数据在一个新数组中。
-  const RecommendedProduct = productsInfo.filter((eachitem) => {
+  const RecommendedProduct = productsInfo?.filter((eachitem) => {
     return eachitem.recommended === true;
   });
 
   //params传参，取id值
   const params = useParams();
-  let paramsId = params.id;
+  let paramsId = params?.itemNumber;
+
   //如果参选中的每一个卡片id等于传参接到的那个id，就返回那个卡片。Filter出来会是一个
   //新数组，我需要拿到它的第一位，那就是【0】
+
   const currentParamsId_Card = card18?.filter((eachcard) => {
-    if (eachcard.id === Number(paramsId)) {
+    if (eachcard?.itemNumber === Number(paramsId)) {
       return eachcard;
     }
   })[0];
+  // console.log("currentParamsId_Card", currentParamsId_Card);
+  let itemNumber = currentParamsId_Card?.itemNumber;
 
   const handleAddtoCart = () => {
-    setShoppingCartList([
-      ...shoppingCartList,
-      {
-        ...currentParamsId_Card,
-        quantity: currentParamsId_Card.quantity + 1,
-        addedInCart: true,
-        selectedColor: selectedColor,
-        selectedFrameSize: selectedFrameSize,
-      },
-    ]);
+    // setShoppingCartList([
+    //   ...shoppingCartList,
+    //   {
+    //     ...currentParamsId_Card,
+    //     quantity: currentParamsId_Card.quantity + 1,
+    //     addedInCart: true,
+    //     selectedColor: selectedColor,
+    //     selectedFrameSize: selectedFrameSize,
+    //   },
+    // ]);
+    const currentParamsId_Cardinfo = {
+      ...currentParamsId_Card,
+      quantity: currentParamsId_Card.quantity + 1,
+      selectedColor: selectedColor,
+      selectedFrameSize: selectedFrameSize,
+    };
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shop", currentParamsId_Cardinfo)
+      .then((res) => {
+        console.log("46464", currentParamsId_Cardinfo);
+        // console.log("iii", item);
+        console.log("DETAIL:add to shopping cart", res.data.data);
+
+        // setShoppingCartList(res.data);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            // console.log("Get shoppingCartList data", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            // console.log("get shop item fail", error);
+          });
+      })
+      .catch((error) => {
+        console.log("DETAIL:addItem Failed", error);
+      });
   };
 
   //Remove item from shopping cart
   const handlerRemovefromCart = () => {
-    const newList = shoppingCartList.filter((eachItem) => {
-      return eachItem.id !== currentParamsId_Card.id;
-    });
-    setShoppingCartList(newList);
+    // const newList = shoppingCartList.filter((eachItem) => {
+    //   return eachItem.itemNumber !== currentParamsId_Card.itemNumber;
+    // });
+    // setShoppingCartList(newList);
+    let itemNumbernum = { itemNumber };
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shopproductCardDelete", itemNumbernum)
+      .then((res) => {
+        console.log("shopProductCardDelete", res.data);
+        console.log("remove item", itemNumber);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            console.log("Get shoppingCartList data", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            // console.log("get shop item fail", error);
+          });
+      })
+      .catch((error) => {
+        // console.log("Fail to remove item", error);
+      });
   };
   // console.log("detail setSelectedFrameSize", setSelectedFrameSize);
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
 
   const ifItemInCart =
-    shoppingCartList.filter((eachItem) => {
-      return eachItem.id === currentParamsId_Card.id;
-    }).length === 1;
+    shoppingCartData.filter((eachItem) => {
+      return eachItem?.itemNumber === currentParamsId_Card?.itemNumber;
+    })?.length === 1;
 
   return (
     <div className="Productdetail">
@@ -102,22 +161,22 @@ export default function Productdetail({ productsInfo }) {
       <div className="productmodles">
         <div className="productmodle_img">
           <img
-            src={currentParamsId_Card.img}
+            src={renderGlassImg(currentParamsId_Card?.img)}
             alt="model1"
             className="modelsimg"
           />
         </div>
         <div className="showcase">
           <img
-            src={currentParamsId_Card.img}
+            src={renderGlassImg(currentParamsId_Card?.img)}
             alt="model1"
             className="showcaseimg"
           />
         </div>
         <div className="modelDetails">
           <div className="modelDetails_toppart">
-            <div className="md_subtitle">{currentParamsId_Card.subtitle}</div>
-            <div className="md_title">{currentParamsId_Card.title}</div>
+            <div className="md_subtitle">{currentParamsId_Card?.subtitle}</div>
+            <div className="md_title">{currentParamsId_Card?.title}</div>
             <div className="md_explaination">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
               placeat similique dicta nulla praesentium deserunt. Corporis
@@ -142,7 +201,7 @@ export default function Productdetail({ productsInfo }) {
               <div className="gc_colors">
                 <div className="gc_colorcircle">
                   <ColorList
-                    currentColorlist={currentParamsId_Card.colors}
+                    currentColorlist={currentParamsId_Card?.colors}
                     setSelectedColor={setSelectedColor}
                   />
                 </div>
@@ -151,7 +210,7 @@ export default function Productdetail({ productsInfo }) {
           </div>
           <div className="modleDetails_bottompart">
             <div className="glasses_pricing">
-              ${currentParamsId_Card.price}.00
+              ${currentParamsId_Card?.price}.00
             </div>
 
             {ifItemInCart ? (

@@ -13,7 +13,7 @@ import img_green from "../assest/green.jpg";
 import banner_gril1 from "../assest/banner-girl-1.png";
 
 export default function Recommended({ productsInfo }) {
-  const RecommendedProduct = productsInfo.filter((eachitem) => {
+  const RecommendedProduct = productsInfo?.filter((eachitem) => {
     return eachitem.recommended === true;
   });
   return (

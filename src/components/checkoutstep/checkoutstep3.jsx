@@ -3,6 +3,9 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import shopCartContext from "../../context/shopcartContext";
 import "./checkoutstep3.css";
 import Paymentoption from "./paymentoption/paymentoption";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { setCurrentShoppingCartList } from "../../actions/shoppingCartAction";
 
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -21,6 +24,10 @@ const steps = ["Order Summary", "Shopping Detials", "Payment"];
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function CheckoutStep3() {
+  const shoppingCartData = useSelector((state) => {
+    return state?.shoppingCartReducer?.shoppingCartList;
+  });
+  const dispatch = useDispatch();
   const [activeStep, setActiveStep] = React.useState(2);
   const [completed, setCompleted] = React.useState({});
   const {
@@ -29,9 +36,9 @@ export default function CheckoutStep3() {
     shippingCost,
     setShippingCost,
   } = useContext(shopCartContext);
-  const itemInCart = shoppingCartList;
+  const itemInCart = shoppingCartData;
   //get total price
-  const subtotalPriceList = itemInCart.map((eachitem) => {
+  const subtotalPriceList = itemInCart?.map((eachitem) => {
     return eachitem.price * eachitem.quantity;
   });
   const initial_subtotalPrice = 0;
@@ -41,14 +48,31 @@ export default function CheckoutStep3() {
   );
 
   const totalSteps = () => {
-    return steps.length;
+    return steps?.length;
   };
   const completedSteps = () => {
-    return Object.keys(completed).length;
+    return Object.keys(completed)?.length;
   };
 
   const handleNext = () => {
-    setShoppingCartList([]);
+    // setShoppingCartList([]);
+    axios
+      .post("http://127.0.0.1:8080/api/v1/shopproductCardDeleteAll")
+      .then((res) => {
+        console.log("Empty shopping cart", res.data);
+        axios
+          .get("http://127.0.0.1:8080/api/v1/shop")
+          .then((res) => {
+            console.log("Empty whole list", res.data.data);
+            dispatch(setCurrentShoppingCartList(res.data.data));
+          })
+          .catch((error) => {
+            console.log("faile to empty", error);
+          });
+      })
+      .catch((error) => {
+        console.log("Failed to empty shopping cart", error);
+      });
   };
 
   const handleComplete = () => {
@@ -75,7 +99,7 @@ export default function CheckoutStep3() {
         >
           {/* checkout 栏目 */}
           <Stepper nonLinear activeStep={activeStep}>
-            {steps.map((label, index) => (
+            {steps?.map((label, index) => (
               <Step key={label} completed={completed[index]}>
                 <StepButton
                   // onClick={handleStep(index)}

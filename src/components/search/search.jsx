@@ -13,12 +13,12 @@ export default function Search({ productsInfo }) {
   let matchsearch = `^${searchid}`;
   let reg = new RegExp(matchsearch, "i");
 
-  const compareCardTitleResult = productsInfo.filter((eachcard) => {
+  const compareCardTitleResult = productsInfo?.filter((eachcard) => {
     if (reg.test(eachcard.title.replace(/\s/g, "")) === true) {
       return eachcard;
     }
   });
-  console.log("compareCardTitleResult", compareCardTitleResult);
+
   // const [currentDisplayCard, setCurrentDisplayCard] = useState(
   //   compareCardTitleResult
   // );
@@ -31,7 +31,7 @@ export default function Search({ productsInfo }) {
       {compareCardTitleResult?.length > 0 ? (
         <>
           <div className="searchinfo">
-            Found {compareCardTitleResult?.length} product with keyword{" "}
+            Found {compareCardTitleResult?.length} product with keyword
             {searchid}
           </div>
 
