@@ -53,19 +53,22 @@ export default function ShoppingcartCard({ eachItem }) {
     // setShoppingCartList(newList);
     const dataSet = { value: itemNumber };
     axios
-      .post("http://127.0.0.1:8080/api/v1/shopproductCardUpdate", dataSet)
+      .post(
+        "https://vivaser.onrender.com/api/v1/shopproductCardUpdate",
+        dataSet
+      )
       .then((res) => {
         // console.log("iii", item);
-        console.log("DETAIL:updateOne to shopping cart", res.data.data);
+        // console.log("DETAIL:updateOne to shopping cart", res.data.data);
 
         // setShoppingCartList(res.data);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
-            console.log(
-              "add quantity:Get shoppingCartList data",
-              res.data.data
-            );
+            // console.log(
+            //   "add quantity:Get shoppingCartList data",
+            //   res.data.data
+            // );
             dispatch(setCurrentShoppingCartList(res.data.data));
           })
           .catch((error) => {
@@ -91,19 +94,19 @@ export default function ShoppingcartCard({ eachItem }) {
     const dataSet = { itemNumber: itemNumber };
     axios
       .post(
-        "http://127.0.0.1:8080/api/v1/shopproductCardUpdatedecrese",
+        "https://vivaser.onrender.com/api/v1/shopproductCardUpdatedecrese",
         dataSet
       )
       .then((res) => {
         // console.log("iii", item);
         console.log("DECREASE:updateOne to shopping cart", res.data.data);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
-            console.log(
-              "remove quantity:Get shoppingCartList data",
-              res.data.data
-            );
+            // console.log(
+            //   "remove quantity:Get shoppingCartList data",
+            //   res.data.data
+            // );
             dispatch(setCurrentShoppingCartList(res.data.data));
           })
           .catch((error) => {
@@ -123,14 +126,17 @@ export default function ShoppingcartCard({ eachItem }) {
     // setShoppingCartList(newList);
     let itemNumbernum = { itemNumber };
     axios
-      .post("http://127.0.0.1:8080/api/v1/shopproductCardDelete", itemNumbernum)
+      .post(
+        "https://vivaser.onrender.com/api/v1/shopproductCardDelete",
+        itemNumbernum
+      )
       .then((res) => {
-        console.log("shopProductCardDelete", res.data);
-        console.log("remove item", itemNumber);
+        // console.log("shopProductCardDelete", res.data);
+        // console.log("remove item", itemNumber);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
-            console.log("Get shoppingCartList data", res.data.data);
+            // console.log("Get shoppingCartList data", res.data.data);
             dispatch(setCurrentShoppingCartList(res.data.data));
           })
           .catch((error) => {

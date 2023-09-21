@@ -195,7 +195,7 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
       regPassword.test(currentUserinfo.password) === true
     ) {
       axios
-        .post("http://127.0.0.1:8080/api/v1/signup", currentUserinfo)
+        .post("https://vivaser.onrender.com/api/v1/signup", currentUserinfo)
         .then((res) => {
           let loginUser = {
             email: currentUserinfo.email,
@@ -209,9 +209,9 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
             // axios.post("http://127.0.0.1:8080/api/v1/signStatus",ifsigned)
 
             axios
-              .post("http://127.0.0.1:8080/api/v1/signin", loginUser)
+              .post("https://vivaser.onrender.com/api/v1/signin", loginUser)
               .then((res) => {
-                console.log("fanhui ", res.data);
+                // console.log("fanhui ", res.data);
                 navigate("/");
                 dispatch(setUserInfoData(res.data?.data));
                 // dispatch(setLoginData(true));
@@ -249,10 +249,10 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
     e.preventDefault();
     //后端接user数据，后端返回响应
     axios
-      .post("http://127.0.0.1:8080/api/v1/signin", currentLoginUserInfo)
+      .post("https://vivaser.onrender.com/api/v1/signin", currentLoginUserInfo)
 
       .then((res) => {
-        console.log("llogin res", res.data);
+        // console.log("llogin res", res.data);
         if (res.data.code === 1) {
           // dispatch(setLoginData(true));
           dispatch(setUserInfoData(res.data?.data));
@@ -288,6 +288,7 @@ export default function SignupIn({ whichSign, userContent, authQuestion }) {
   //   }
   // }, [ifsigned]);
 
+  // console.log("commmit");
   // const handleinputChange = (e) => {
   //   if (whichSign === "signup") {
   //     if (e.target.type === "text") {

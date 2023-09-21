@@ -68,15 +68,18 @@ export default function Productdetail({ productsInfo }) {
       selectedFrameSize: selectedFrameSize,
     };
     axios
-      .post("http://127.0.0.1:8080/api/v1/shop", currentParamsId_Cardinfo)
+      .post(
+        "https://vivaser.onrender.com/api/v1/shop",
+        currentParamsId_Cardinfo
+      )
       .then((res) => {
-        console.log("46464", currentParamsId_Cardinfo);
+        // console.log("46464", currentParamsId_Cardinfo);
         // console.log("iii", item);
-        console.log("DETAIL:add to shopping cart", res.data.data);
+        // console.log("DETAIL:add to shopping cart", res.data.data);
 
         // setShoppingCartList(res.data);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
             // console.log("Get shoppingCartList data", res.data.data);
             dispatch(setCurrentShoppingCartList(res.data.data));
@@ -98,14 +101,17 @@ export default function Productdetail({ productsInfo }) {
     // setShoppingCartList(newList);
     let itemNumbernum = { itemNumber };
     axios
-      .post("http://127.0.0.1:8080/api/v1/shopproductCardDelete", itemNumbernum)
+      .post(
+        "https://vivaser.onrender.com/api/v1/shopproductCardDelete",
+        itemNumbernum
+      )
       .then((res) => {
-        console.log("shopProductCardDelete", res.data);
-        console.log("remove item", itemNumber);
+        // console.log("shopProductCardDelete", res.data);
+        // console.log("remove item", itemNumber);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
-            console.log("Get shoppingCartList data", res.data.data);
+            // console.log("Get shoppingCartList data", res.data.data);
             dispatch(setCurrentShoppingCartList(res.data.data));
           })
           .catch((error) => {

@@ -38,9 +38,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8080/api/v1/")
+      .get("https://vivaser.onrender.com/api/v1/")
       .then((res) => {
-        console.log("/ response.data", res.data);
+        // console.log("/ response.data", res.data);
         dispatch(setProducts(res.data));
       })
       .catch((error) => {
@@ -48,9 +48,9 @@ function App() {
       });
 
     axios
-      .get("http://127.0.0.1:8080/api/v1/shop")
+      .get("https://vivaser.onrender.com/api/v1/shop")
       .then((res) => {
-        console.log("Get shoppingCartList data", res.data.data);
+        // console.log("Get shoppingCartList data", res.data.data);
         dispatch(setCurrentShoppingCartList(res.data.data));
       })
       .catch((error) => {

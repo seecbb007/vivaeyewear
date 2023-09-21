@@ -57,13 +57,13 @@ export default function CheckoutStep3() {
   const handleNext = () => {
     // setShoppingCartList([]);
     axios
-      .post("http://127.0.0.1:8080/api/v1/shopproductCardDeleteAll")
+      .post("https://vivaser.onrender.com/api/v1/shopproductCardDeleteAll")
       .then((res) => {
-        console.log("Empty shopping cart", res.data);
+        // console.log("Empty shopping cart", res.data);
         axios
-          .get("http://127.0.0.1:8080/api/v1/shop")
+          .get("https://vivaser.onrender.com/api/v1/shop")
           .then((res) => {
-            console.log("Empty whole list", res.data.data);
+            // console.log("Empty whole list", res.data.data);
             dispatch(setCurrentShoppingCartList(res.data.data));
           })
           .catch((error) => {

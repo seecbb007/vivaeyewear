@@ -17,7 +17,7 @@ export default function CheckoutStep1() {
   const shoppingCartData = useSelector((state) => {
     return state?.shoppingCartReducer?.shoppingCartList;
   });
-  console.log("dahsodh", shoppingCartData);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const { shoppingCartList, setShoppingCartList } = useContext(shopCartContext);
